@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+	<meta charset="utf-8"> 
+	<head>
+		<title>JS2 - JQuery Generator</title>
+	</head>
+	<style>
+	table {
+	  font-family: arial, sans-serif;
+	  border-collapse: collapse;
+	  width: 100%;
+	}
+
+	td, th {
+	  border: 1px solid black;
+	  text-align: left;
+	  padding: 8px;
+	}
+
+	.oddRow{
+	  background-color: #dddddd;
+	}
+
+	.tenth{
+	  border-style: solid;
+	  border-width: 1px 1px 5px 1px;
+	  border-color: black;
+	}
+
+	</style>
+	<body>
+
+		<div>
+			<h3>JS2 - JQuery Generator</h3>
+			<input type="text" placeholder="0" id="inputText" onkeypress="generateTableEvt(event)">
+			<button id="goBtn" onclick="generateTable()">GO</button>
+		</div>
+		<div id="tbArea">
+		</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="script.js"></script>
+
+	</body>
+</html>
