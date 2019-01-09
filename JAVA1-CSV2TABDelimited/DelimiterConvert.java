@@ -7,9 +7,17 @@ import java.util.Scanner;
 import java.util.List;
 import java.util.Arrays;
 import java.util.ArrayList;
-import java.util.stream.Stream;
 import java.util.stream.Collectors;
 
+/*
+
+I am not sure if the question is asking for replacing the delimiter with \t
+Or just take the school information out and use \t as delimiter for that information
+So I did both.
+	allOutput.txt is for all the data
+	schoolOutput.txt has just the school data (Some delimiters seems like spaces
+	but they are tabs.)
+*/
 public class DelimiterConvert{
 
 	static List<Student> students;
@@ -50,7 +58,7 @@ public class DelimiterConvert{
 
 	static void writeAllData() throws IOException {
 		BufferedWriter writer = new BufferedWriter(new FileWriter("allOutput.txt"));
-		
+		//Take all the data of students and put it all together in one list
 		List<String> infoList = students.stream().map(stu -> stu.toString()).collect(Collectors.toList());
 		
 		writer.write(String.join("",infoList));
@@ -61,7 +69,7 @@ public class DelimiterConvert{
 	static void writeSchoolData() throws IOException {
 		
 		BufferedWriter writer = new BufferedWriter(new FileWriter("schoolOutput.txt"));
-
+		//Take only the school data of students and put it in one list
 		List<String> schoolList = students.stream().map(stu -> stu.getSchool()).collect(Collectors.toList());
 
 		writer.write(String.join("\t",schoolList));
