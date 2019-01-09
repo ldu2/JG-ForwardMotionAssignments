@@ -3,19 +3,17 @@ $(function() {
 	$("#inputText").val('');
 });
 
-shdEveryOtherRow = () => {
+shdEveryOtherRow = (evt) => {
 	
-	$("#tbArea table tr ").each((index, item) => {
-
-		if(index%2 == 0){
+	$("tr").each(function(i){
+		if(i%2 == 0){
 			$(this).attr("class","oddRow");
-			console.log($(this).attr("class"));
 		}
 	});
 }
 
 shwDarkLnEveryTenRow = ()=>{
-	$("tr").each((index) => {
+	$("tr").each(function(index) {
 		if((index+1)%10 == 0){
 			$(this).attr("class","tenth");
 			console.log($(this).attr("class"));
@@ -39,12 +37,12 @@ generateTable = () => {
 
 	//get the table and create the row
 	let table = $("<table></table>");
-	let btnShdEveryOtherRow = $("<button onclick='shdEveryOtherRow()'>Shade Every Other Row</button>");
+	let btnShdEveryOtherRow = $("<button onclick='shdEveryOtherRow(event)'>Shade Every Other Row</button>");
 	let btnShwDarkLnEveryTenRow = $("<button onclick='shwDarkLnEveryTenRow()'>Show Dark Line Every Ten Row</button>");
 	let resetTable = $("<button onclick='resetTable()'>Reset</button>");	
 	let i;
 	for(i=0;i<parseInt($("#inputText").val());i++){
-		let row = $("<tr class=''></tr>");
+		let row = $("<tr ></tr>");
 		let left = $("<td></td>");
 		//now the right hand side elements
 		let right = $("<td></td>");
