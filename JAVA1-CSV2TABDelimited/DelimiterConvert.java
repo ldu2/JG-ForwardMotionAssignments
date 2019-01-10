@@ -5,10 +5,10 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.List;
-import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-
+import java.util.Map;
+import java.util.HashMap;
 /*
 
 I am not sure if the question is asking for replacing the delimiter with \t
@@ -20,7 +20,9 @@ So I did both.
 */
 public class DelimiterConvert{
 
-	static List<Student> students;
+	static HashMap<String,List<Student>> students;
+	static String FNF_ERR_MSG = "Please make sure you have a data file with the name data.csv and the delimiters are commas(,)";
+	static String GEN_ERR_MSG = "General Exception Message";
 
 	static class Student{
 
@@ -41,7 +43,7 @@ public class DelimiterConvert{
 		}
 
 		public String toString(){
-			return _id + "\t" +_name+"\t"+_school+"\n";
+			return _id + "," +_name;
 		}
 
 	}
@@ -51,44 +53,39 @@ public class DelimiterConvert{
 		while(scanner.hasNext()){
 			String[] dt = scanner.nextLine().split(",",0);
 			Student s = new Student(dt[0],dt[1],dt[2]);
-			students.add(s);
+			if(!students.containsKey(dt[2]))
+				students.put(dt[2],new ArrayList<Student>());
+			students.get(dt[2]).add(s);				
 		}
 		scanner.close();
 	}
 
-	static void writeAllData() throws IOException {
-		BufferedWriter writer = new BufferedWriter(new FileWriter("allOutput.txt"));
-		//Take all the data of students and put it all together in one list
-		List<String> infoList = students.stream().map(stu -> stu.toString()).collect(Collectors.toList());
-		
-		writer.write(String.join("",infoList));
+	static void writeData() throws IOException {
 
-		writer.close();
-	}
+		for(Map.Entry<String, List<Student>> item: students.entrySet()){
 
-	static void writeSchoolData() throws IOException {
-		
-		BufferedWriter writer = new BufferedWriter(new FileWriter("schoolOutput.txt"));
-		//Take only the school data of students and put it in one list
-		List<String> schoolList = students.stream().map(stu -> stu.getSchool()).collect(Collectors.toList());
+			BufferedWriter writer = new BufferedWriter(new FileWriter(item.getKey()));
+			//Take all the data of students and put it all together in one list
+			String infoList = item.getValue().stream().map(stu -> stu.toString()).collect(Collectors.joining("\t"));
+			
+			writer.write(infoList);
 
-		writer.write(String.join("\t",schoolList));
-		
-		writer.close();
+			writer.close();
+		}
 	}
 
 	public static void main(String[] args){
 		try{
-			students = new ArrayList<Student>();
+			students = new HashMap<String, List<Student>>();
 			readData();
-			writeAllData();
-			writeSchoolData();
+			writeData();
 
 		}catch(FileNotFoundException e){
-			System.out.println("Please make sure you have a data file with the name data.csv and the delimiters are commas(,)");
-		}
-		catch(IOException e){
-			System.out.println("Please make sure you have a data file with the name data.csv and the delimiters are commas(,)");
+			System.out.println(FNF_ERR_MSG);
+			e.printStackTrace();
+		}catch(Exception e){
+			System.out.println(GEN_ERR_MSG);
+			e.printStackTrace();
 		}
 	
 	}

@@ -1,23 +1,20 @@
 
 $(function() {
-	$("#inputText").val('');
+	$("#inputNumber").val('');
 });
 
 shdEveryOtherRow = (evt) => {
 	
 	$("tr").each(function(i){
-		if(i%2 == 0){
+		if(i%2 == 0)
 			$(this).attr("class","oddRow");
-		}
 	});
 }
 
 shwDarkLnEveryTenRow = ()=>{
 	$("tr").each(function(index) {
-		if((index+1)%10 == 0){
+		if((index+1)%10 == 0)
 			$(this).attr("class","tenth");
-			console.log($(this).attr("class"));
-		}
 	});
 }
 
@@ -27,9 +24,10 @@ resetTable = () =>{
 
 generateTable = () => {
 	
-	if(!$.isNumeric($("#inputText").val())){
+	if(parseInt($("#inputNumber").val()) < parseInt($("#inputNumber").attr('min')) 
+	|| parseInt($("#inputNumber").val())>parseInt($("#inputNumber").attr('max'))){
 		alert("Invalid input");
-		$("#inputText").val('');
+		$("#inputNumber").val('');
 		return true;
 	}
 	$("table").remove();
@@ -40,8 +38,8 @@ generateTable = () => {
 	let btnShdEveryOtherRow = $("<button onclick='shdEveryOtherRow(event)'>Shade Every Other Row</button>");
 	let btnShwDarkLnEveryTenRow = $("<button onclick='shwDarkLnEveryTenRow()'>Show Dark Line Every Ten Row</button>");
 	let resetTable = $("<button onclick='resetTable()'>Reset</button>");	
-	let i;
-	for(i=0;i<parseInt($("#inputText").val());i++){
+	let i,size;
+	for(i=0,size=parseInt($("#inputNumber").val());i<size;i++){
 		let row = $("<tr ></tr>");
 		let left = $("<td></td>");
 		//now the right hand side elements
@@ -59,8 +57,8 @@ generateTable = () => {
 	$("#tbArea").append(btnShwDarkLnEveryTenRow);
 	$("#tbArea").append(resetTable);
 	$("#tbArea").append(table);
-	$("#inputText").val('');
-	$("#inputText").focus();
+	$("#inputNumber").val('');
+	$("#inputNumber").focus();
 }
 
 generateTableEvt = (e) => {

@@ -26,17 +26,20 @@ public class Sortids{
 	//the arrays for the string ids and integer ids
 	static String[] dataStrArr;
 	static int[] dataNumArr;
-
+	static String FNF_ERR_MSG = "Please make sure you have a data file with the name data.csv and the delimiters are commas(,)";
+	static String GEN_ERR_MSG = "General Exception Message";
 	//if return value larger than 0, then str1>str2
 	//if less than 0, str1<str2
 	//if 0, they are same string
 	static int compareStr(String str1, String str2){
 		
-		for(int i=0;i<str1.length() && i<str2.length();i++){
+		int strLen1 = str1.length();
+		int strLen2 = str2.length();
+		for(int i=0;i<strLen1 && i<strLen2;i++){
 			if(str1.charAt(i)!=str2.charAt(i))
 				return str1.charAt(i) - str2.charAt(i);
 		}
-		return str1.length() - str2.length();
+		return strLen1 - strLen2;
 	}
 
 	static void readData() throws FileNotFoundException{
@@ -68,8 +71,10 @@ public class Sortids{
 	//have to sort them seperately
 
 	static void sortData(){
-		for(int i=0;i<dataStrArr.length;i++){
-			for(int j=i;j<dataStrArr.length;j++){
+		int strSize = dataStrArr.length;
+		int numSize = dataNumArr.length;
+		for(int i=0;i<strSize;i++){
+			for(int j=i;j<strSize;j++){
 				if(compareStr(dataStrArr[i],dataStrArr[j])>0){
 					String temp = dataStrArr[i];
 					dataStrArr[i] = dataStrArr[j];
@@ -77,8 +82,8 @@ public class Sortids{
 				}
 			}		
 		}
-		for(int i=0;i<dataNumArr.length;i++){
-			for(int j=i;j<dataNumArr.length;j++){
+		for(int i=0;i<numSize;i++){
+			for(int j=i;j<numSize;j++){
 				if(dataNumArr[i]>dataNumArr[j]){
 					int temp = dataNumArr[i];
 					dataNumArr[i] = dataNumArr[j];
@@ -97,7 +102,7 @@ public class Sortids{
 		dataStrArr=dataStr.toArray(new String[dataStr.size()]);
 	}
 
-	public static void main(String[] args) throws IOException{
+	public static void main(String[] args){
 		try{
 			dataStr = new ArrayList<String>();
 			dataNum = new ArrayList<Integer>();
@@ -105,7 +110,11 @@ public class Sortids{
 			sortData();
 			writeData();
 		}catch(FileNotFoundException e){
-			System.out.println("Please make sure you have a data file with the name data.csv and the delimiters are commas(,)");
+			System.out.println(FNF_ERR_MSG);
+			e.printStackTrace();
+		}catch(Exception e){
+			System.out.println(GEN_ERR_MSG);
+			e.printStackTrace();
 		}
 		
 	}
